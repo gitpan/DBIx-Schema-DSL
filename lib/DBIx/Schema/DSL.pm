@@ -3,7 +3,7 @@ use 5.008_001;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use DBIx::Schema::DSL::Context;
 use SQL::Translator::Schema::Constants;
@@ -126,6 +126,10 @@ sub column($$;%) {
     }
     elsif ($c->default_unsigned && $data_type =~ /int(?:eger)$/) {
         $args{extra}{unsigned} = 1;
+    }
+
+    if ($args{data_type} eq 'VARCHAR' && !$args{size}) {
+        $args{size} = 255;
     }
 
     if ($args{precision}) {
@@ -396,25 +400,45 @@ DataType functions are as follows.
 =over
 
 =item bigint
+
 =item binary
+
 =item bit
+
 =item blob
+
 =item char
+
 =item date
+
 =item datetime
+
 =item dec
+
 =item decimal
+
 =item double
+
 =item integer
+
 =item number
+
 =item numeric
+
 =item smallint
+
 =item string
+
 =item text
+
 =item timestamp
+
 =item tinyblob
+
 =item tinyint
+
 =item varbinary
+
 =item varchar
 
 =back
@@ -518,7 +542,9 @@ Alias of C<< foreign_key(@_) >>
 =over
 
 =item C<< has_many($foreign_table) >>
+
 =item C<< has_one($foreign_table) >>
+
 =item C<< belongs_to($foreign_table) >>
 
 =back

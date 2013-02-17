@@ -42,7 +42,7 @@
    "provides" : {
       "DBIx::Schema::DSL" : {
          "file" : "lib/DBIx/Schema/DSL.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       },
       "DBIx::Schema::DSL::Context" : {
          "file" : "lib/DBIx/Schema/DSL/Context.pm",
@@ -55,5 +55,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }
