@@ -20,15 +20,16 @@ no_index:
 provides:
   DBIx::Schema::DSL:
     file: lib/DBIx/Schema/DSL.pm
-    version: 0.02
+    version: 0.03
   DBIx::Schema::DSL::Context:
     file: lib/DBIx/Schema/DSL/Context.pm
     version: 0
 requires:
+  Array::Diff: 0
   Clone: 0.06
   Moo: 1.000003
   SQL::Translator: 0.11011
   perl: 5.008001
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
