@@ -4,7 +4,7 @@
       "Masayuki Matsuki E<lt>y.songmu@gmail.comE<gt>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -43,7 +43,7 @@
    "provides" : {
       "DBIx::Schema::DSL" : {
          "file" : "lib/DBIx/Schema/DSL.pm",
-         "version" : "0.03"
+         "version" : "0.04"
       },
       "DBIx::Schema::DSL::Context" : {
          "file" : "lib/DBIx/Schema/DSL/Context.pm",
@@ -56,5 +56,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }

@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.38
 dynamic_config: 0
-generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120630'
+generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -20,7 +20,7 @@ no_index:
 provides:
   DBIx::Schema::DSL:
     file: lib/DBIx/Schema/DSL.pm
-    version: 0.03
+    version: 0.04
   DBIx::Schema::DSL::Context:
     file: lib/DBIx/Schema/DSL/Context.pm
     version: 0
@@ -32,4 +32,4 @@ requires:
   perl: 5.008001
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.03
+version: 0.04

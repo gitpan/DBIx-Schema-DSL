@@ -3,7 +3,7 @@ use 5.008_001;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Carp qw/croak/;
 use Array::Diff;
@@ -116,13 +116,18 @@ sub _detect_undefined_columns {
 }
 
 sub column($$;%) {
-    my ($column_name, $data_type, %opt) = @_;
+    my ($column_name, $data_type, @opt) = @_;
+    croak '`column` function called in non void context' if defined wantarray;
+    if (@opt % 2) {
+        croak "odd number elements are assined to options. arguments: [@{[join ', ', @_]}]";
+    }
+    my %opt = @opt;
     $data_type = 'varchar' if $data_type eq 'string';
 
     my $c = caller->context;
 
     my $creating_data = $c->_creating_table
-        or die q{can't call `column` method outside `create_table` method};
+        or croak q{can't call `column` method outside `create_table` method};
 
     my %args = (
         name      => $column_name,
