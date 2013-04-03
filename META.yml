@@ -20,7 +20,7 @@ no_index:
 provides:
   DBIx::Schema::DSL:
     file: lib/DBIx/Schema/DSL.pm
-    version: 0.04
+    version: 0.05
   DBIx::Schema::DSL::Context:
     file: lib/DBIx/Schema/DSL/Context.pm
     version: 0
@@ -32,4 +32,4 @@ requires:
   perl: 5.008001
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.04
+version: 0.05
