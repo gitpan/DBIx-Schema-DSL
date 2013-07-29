@@ -9,7 +9,7 @@ configure_requires:
   CPAN::Meta::Prereqs: 0
   Module::Build: 0.38
 dynamic_config: 0
-generated_by: 'Minilla/v0.5.3, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Minilla/v0.5.6, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -27,7 +27,7 @@ no_index:
 provides:
   DBIx::Schema::DSL:
     file: lib/DBIx/Schema/DSL.pm
-    version: 0.06
+    version: 0.07
   DBIx::Schema::DSL::Context:
     file: lib/DBIx/Schema/DSL/Context.pm
     version: 0
@@ -41,4 +41,6 @@ resources:
   bugtracker: https://github.com/Songmu/p5-DBIx-Schema-DSL/issues
   homepage: https://github.com/Songmu/p5-DBIx-Schema-DSL
   repository: git://github.com/Songmu/p5-DBIx-Schema-DSL.git
-version: 0.06
+version: 0.07
+x_contributors:
+  - 'tokubass <tomi21110@gmail.com>'

@@ -4,7 +4,7 @@ DBIx::Schema::DSL - DSL for Database schema declaration
 
 # VERSION
 
-This document describes DBIx::Schema::DSL version 0.06.
+This document describes DBIx::Schema::DSL version 0.07.
 
 # SYNOPSIS
 
@@ -74,6 +74,11 @@ Set global setting of table->extra for SQL::Translator::Table
 
 Automatically set unsigned when declaring integer columns.
 If you want to declare singed columns, using \`singed\` sugar.
+
+### `default_not_null()`
+
+Automatically set not null.
+If you want to declare null columns, using \`null\` sugar.
 
 ### `create_table($table_name :Str, $columns :CodeRef)`
 
