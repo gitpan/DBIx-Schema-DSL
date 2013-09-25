@@ -1,5 +1,9 @@
 Revision history for Perl extension DBIx::Schema::DSL
 
+0.08 2013-09-25T16:39:34Z
+    - accepts foreign constraints options
+    - fix typo
+
 0.07 2013-07-29T03:20:58Z
     - add DSL default_not_null (tokubass)
 

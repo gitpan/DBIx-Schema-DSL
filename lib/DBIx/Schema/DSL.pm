@@ -3,7 +3,7 @@ use 5.008_001;
 use strict;
 use warnings;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Carp qw/croak/;
 use Array::Diff;
@@ -278,13 +278,14 @@ sub foreign_key {
     my $creating_data = $c->_creating_table
         or die q{can't call `foreign` method outside `create_table` method};
 
-    my ($columns, $table, $foreign_columns) = @_;
+    my ($columns, $table, $foreign_columns, %opt) = @_;
 
     push @{$creating_data->{constraints}}, {
         type => FOREIGN_KEY,
         fields           => $columns,
         reference_table  => $table,
         reference_fields => $foreign_columns,
+        %opt,
     };
 }
 *fk = \&foreign_key;
@@ -294,10 +295,10 @@ sub has_many {
 
     my ($table, %opt) = @_;
 
-    my $columns         = $opt{column}         || 'id';
-    my $foreign_columns = $opt{foregin_column} || $c->_creating_table_name .'_id';
+    my $columns         = delete $opt{column}         || 'id';
+    my $foreign_columns = delete $opt{foreign_column} || $c->_creating_table_name .'_id';
 
-    @_ = ($columns, $table, $foreign_columns);
+    @_ = ($columns, $table, $foreign_columns, %opt);
     goto \&foreign_key;
 }
 
@@ -306,20 +307,20 @@ sub has_one {
 
     my ($table, %opt) = @_;
 
-    my $columns         = $opt{column}         || 'id';
-    my $foreign_columns = $opt{foregin_column} || $c->_creating_table_name .'_id';
+    my $columns         = delete $opt{column}         || 'id';
+    my $foreign_columns = delete $opt{foreign_column} || $c->_creating_table_name .'_id';
 
-    @_ = ($columns, $table, $foreign_columns);
+    @_ = ($columns, $table, $foreign_columns, %opt);
     goto \&foreign_key;
 }
 
 sub belongs_to {
     my ($table, %opt) = @_;
 
-    my $columns         = $opt{column}         || "${table}_id";
-    my $foreign_columns = $opt{foregin_column} || 'id';
+    my $columns         = delete $opt{column}         || "${table}_id";
+    my $foreign_columns = delete $opt{foreign_column} || 'id';
 
-    @_ = ($columns, $table, $foreign_columns);
+    @_ = ($columns, $table, $foreign_columns, %opt);
     goto \&foreign_key;
 }
 
@@ -350,7 +351,7 @@ DBIx::Schema::DSL - DSL for Database schema declaration
 
 =head1 VERSION
 
-This document describes DBIx::Schema::DSL version 0.07.
+This document describes DBIx::Schema::DSL version 0.08.
 
 =head1 SYNOPSIS
 
