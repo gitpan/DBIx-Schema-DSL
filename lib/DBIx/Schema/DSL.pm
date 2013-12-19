@@ -3,7 +3,7 @@ use 5.008_001;
 use strict;
 use warnings;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 use Carp qw/croak/;
 use Array::Diff;
@@ -168,9 +168,8 @@ sub column($$;%) {
         $args{extra}{unsigned} = 1;
     }
 
-    if ( !exists $args{$map{null}} && $c->default_not_null ) {
-        my $val = not_null();
-        $args{$map{null}} = $val;
+    if ( !exists $args{is_nullable} && $c->default_not_null ) {
+        $args{is_nullable} = 0;
     }
 
     if ($args{data_type} eq 'VARCHAR' && !$args{size}) {
@@ -192,6 +191,11 @@ sub column($$;%) {
             fields => [$column_name],
             type   => UNIQUE,
         };
+    }
+
+    # explicitly add `DEFAULT NULL` if is_nullable and not specified default_value
+    if ($args{is_nullable} && !exists $args{default_value} && $args{data_type} !~ /^(?:TEXT|BLOB)$/ ) {
+        $args{default_value} = \'NULL';
     }
 
     push @{$creating_data->{columns}}, \%args;
@@ -351,7 +355,7 @@ DBIx::Schema::DSL - DSL for Database schema declaration
 
 =head1 VERSION
 
-This document describes DBIx::Schema::DSL version 0.09.
+This document describes DBIx::Schema::DSL version 0.10.
 
 =head1 SYNOPSIS
 

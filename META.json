@@ -4,7 +4,7 @@
       "Masayuki Matsuki <y.songmu@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.8.2",
+   "generated_by" : "Minilla/v0.11.0",
    "license" : [
       "perl_5"
    ],
@@ -59,7 +59,7 @@
    "provides" : {
       "DBIx::Schema::DSL" : {
          "file" : "lib/DBIx/Schema/DSL.pm",
-         "version" : "0.09"
+         "version" : "0.10"
       },
       "DBIx::Schema::DSL::Context" : {
          "file" : "lib/DBIx/Schema/DSL/Context.pm"
@@ -76,7 +76,7 @@
          "web" : "https://github.com/Songmu/p5-DBIx-Schema-DSL"
       }
    },
-   "version" : "0.09",
+   "version" : "0.10",
    "x_contributors" : [
       "tokubass <tomi21110@gmail.com>"
    ]
