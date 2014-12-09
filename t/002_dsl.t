@@ -14,6 +14,7 @@ create_table user => columns {
     varchar 'name', null => 0;
     varchar 'description', null => 1;
     text    'profile';
+    timestamp 'timestamp', on_update => 'CURRENT_TIMESTAMP', default => \'CURRENT_TIMESTAMP';
 };
 
 create_table book => columns {
@@ -21,6 +22,7 @@ create_table book => columns {
     varchar 'name', null => 0;
     integer 'author_id';
     decimal 'price', size => [4,2];
+    enum    'classification', [qw/novel science/];
 
     belongs_to 'author', on_delete => 'cascade';
 };
@@ -59,6 +61,8 @@ ok my $ddl = $c->translate;
 note $ddl;
 
 like $ddl, qr/ON DELETE cascade/msi;
+like $ddl, qr/on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP/msi;
+like $ddl, qr/`classification` ENUM\('novel', 'science'\) NULL/msi;
 
 ok $c->no_fk_translate ne $c->translate;
 

@@ -3,7 +3,7 @@ use 5.008_001;
 use strict;
 use warnings;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use Carp qw/croak/;
 use Array::Diff;
@@ -21,7 +21,7 @@ sub context {
 # don't override CORE::int
 use Pod::Functions ();
 my @column_methods =
-    grep {!$Pod::Functions::Type{$_}} keys(%SQL::Translator::Schema::Field::type_mapping), qw/string number/;
+    grep {!$Pod::Functions::Type{$_}} grep { /^[a-zA-Z_][0-9a-zA-Z_]*$/ } keys(%SQL::Translator::Schema::Field::type_mapping), qw/string number enum set/;
 my @column_sugars  = qw/unique auto_increment unsigned null/;
 my @rev_column_sugars = qw/not_null signed/;
 my @export_dsls = qw/
@@ -127,6 +127,12 @@ sub _detect_undefined_columns {
 sub column($$;%) {
     my ($column_name, $data_type, @opt) = @_;
     croak '`column` function called in non void context' if defined wantarray;
+
+    if (ref $opt[0] eq 'ARRAY') {
+        # enum or set
+        unshift @opt, 'list';
+    }
+
     if (@opt % 2) {
         croak "odd number elements are assined to options. arguments: [@{[join ', ', @_]}]";
     }
@@ -145,7 +151,6 @@ sub column($$;%) {
 
     my %map = (
         null           => 'is_nullable',
-        size           => 'size',
         limit          => 'size',
         default        => 'default_value',
         unique         => 'is_unique',
@@ -159,14 +164,22 @@ sub column($$;%) {
         %args,
         %opt
     );
+
     if (exists $args{unsigned}) {
-        my $extra = $args{extra} || {};
-        $extra->{unsigned} = delete $args{unsigned};
-        $args{extra} = $extra;
+        $args{extra}{unsigned} = delete $args{unsigned};
     }
     elsif ($c->default_unsigned && $data_type =~ /int(?:eger)?$/) {
         $args{extra}{unsigned} = 1;
     }
+
+    if (exists $args{on_update}) {
+        $args{extra}{'on update'} = delete $args{on_update};
+    }
+
+    if (exists $args{list}) {
+        $args{extra}{list} = delete $args{list};
+    }
+
 
     if ( !exists $args{is_nullable} && $c->default_not_null ) {
         $args{is_nullable} = 0;
@@ -194,7 +207,7 @@ sub column($$;%) {
     }
 
     # explicitly add `DEFAULT NULL` if is_nullable and not specified default_value
-    if ($args{is_nullable} && !exists $args{default_value} && $args{data_type} !~ /^(?:TEXT|BLOB)$/ ) {
+    if ($args{is_nullable} && !exists $args{default_value} && $args{data_type} !~ /^(?:TINY|MEDIUM|LONG)?(?:TEXT|BLOB)$/ ) {
         $args{default_value} = \'NULL';
     }
 
@@ -355,7 +368,7 @@ DBIx::Schema::DSL - DSL for Database schema declaration
 
 =head1 VERSION
 
-This document describes DBIx::Schema::DSL version 0.10.
+This document describes DBIx::Schema::DSL version 0.11.
 
 =head1 SYNOPSIS
 
@@ -496,6 +509,14 @@ DataType functions are as follows.
 
 =item C<varchar>
 
+=item C<float>
+
+=item C<real>
+
+=item C<enum>
+
+=item C<set>
+
 =back
 
 =head3 C<< primary_key($column_name :Str, (%option :Optional)) >>
@@ -524,7 +545,8 @@ mappings are:
     primary_key    => 'is_primary_key',
     auto_increment => 'is_auto_increment',
     unsigned       => {extra => {unsigned => 1}},
-    precisition    => 'size[0]',
+    on_update      => {extra => {'on update' => 'hoge'}},
+    precision      => 'size[0]',
     scale          => 'size[1]',
 
 =head4 Syntax sugars for C<< %option >>

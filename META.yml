@@ -3,17 +3,15 @@ abstract: 'DSL for Database schema declaration'
 author:
   - 'Masayuki Matsuki <y.songmu@gmail.com>'
 build_requires:
-  Test::More: 0.98
+  Test::More: '0.98'
 configure_requires:
-  CPAN::Meta: 0
-  CPAN::Meta::Prereqs: 0
-  Module::Build: 0.38
+  Module::Build: '0.38'
 dynamic_config: 0
-generated_by: 'Minilla/v0.11.0, CPAN::Meta::Converter version 2.132510'
+generated_by: 'Minilla/v2.2.1, CPAN::Meta::Converter version 2.142060'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: DBIx-Schema-DSL
 no_index:
   directory:
@@ -28,19 +26,20 @@ no_index:
 provides:
   DBIx::Schema::DSL:
     file: lib/DBIx/Schema/DSL.pm
-    version: 0.10
+    version: '0.11'
   DBIx::Schema::DSL::Context:
     file: lib/DBIx/Schema/DSL/Context.pm
 requires:
-  Array::Diff: 0
-  Clone: 0.06
-  Moo: 1.000003
-  SQL::Translator: 0.11011
-  perl: 5.008001
+  Array::Diff: '0'
+  Clone: '0.06'
+  Moo: '1.000003'
+  SQL::Translator: '0.11019'
+  perl: '5.008001'
 resources:
   bugtracker: https://github.com/Songmu/p5-DBIx-Schema-DSL/issues
   homepage: https://github.com/Songmu/p5-DBIx-Schema-DSL
   repository: git://github.com/Songmu/p5-DBIx-Schema-DSL.git
-version: 0.10
+version: '0.11'
 x_contributors:
   - 'tokubass <tomi21110@gmail.com>'
+  - 'tokubass <tokubass@cpan.org>'
